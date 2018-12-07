@@ -5,6 +5,7 @@ class Account_manager
 
     def initialize(data)
         puts "Initializing accounts"
+        Interface.instance.display_separation
         @@accounts = data
         @@accounts_name = Hash.new(data["acc_qtt"])
         get_accounts_name(data["accounts"],data["acc_qtt"])
