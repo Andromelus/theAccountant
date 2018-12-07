@@ -15,6 +15,6 @@ class DAO
     end
 
     def overwrite_file(data)
-        File.write(@@file_path, data)
+        File.write(@@file_path, data.to_json)
     end
 end
