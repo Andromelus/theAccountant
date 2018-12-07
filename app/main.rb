@@ -1,11 +1,7 @@
+require_relative 'ui_manager'
 require_relative 'data_access'
 require_relative 'account_manager'
-require_relative 'ui_manager'
 
 
-DAO = Data_access.new
-data = DAO.data_file_to_hash
-AM = Account_manager.new(data)
-
-
-
+Accountant.instance.init_class(DAO.instance.data_file_to_hash)
+Interface.instance.what_to_do

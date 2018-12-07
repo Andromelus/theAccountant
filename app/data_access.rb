@@ -1,6 +1,8 @@
 require 'json'
-class Data_access
+require 'singleton'
+class DAO
 
+    include Singleton
     @@file_path = "./data/data.json"
 
     def merge_hashes_to_json(hash1, hash2)
