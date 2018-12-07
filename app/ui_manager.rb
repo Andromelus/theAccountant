@@ -10,6 +10,7 @@ class Interface
 
     def what_to_do
         puts "[1] - List your accounts"
+        puts "[2] - Update account"
         puts "[10] - Exit"
         todo = gets.chomp
         do_task(todo)
@@ -26,6 +27,8 @@ class Interface
         case todo.to_i
         when 1
             display_accounts_name
+        when 2
+            start_account_update
         when 10
             save_and_exit
         else 
@@ -45,7 +48,6 @@ class Interface
             else
                 line += " | #{accounts[i]}"
             end
-            
         end
         puts line
         display_separation
@@ -58,4 +60,17 @@ class Interface
         exit
     end
 
+    def start_account_update
+        display_vertical_separation(2)
+        display_separation
+        accounts = Accountant.instance.get_accounts_name
+        puts "Which account do you want to update?"
+        for i in 0..accounts.length - 1
+            puts "[#{i}] - #{accounts[i]}"
+        end
+        todo = gets.chomp
+        display_separation
+        display_vertical_separation(2)
+    end
+    
 end
