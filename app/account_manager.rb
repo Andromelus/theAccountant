@@ -25,6 +25,18 @@ class Accountant
             return @@data["accounts"][account_id.to_s]
         end
     end
+
+    def calculate_total_in_account(account_id)
+        if @@data["accounts"][account_id.to_s] == nil
+            return "Does not exist"
+        else
+            total = 0.0
+            for i in 1..@@data["accounts"][account_id.to_s].length - 2
+                total += @@data["accounts"][account_id.to_s][i.to_s]["value"].to_f
+            end
+            return total
+        end
+    end
     
 
     private 

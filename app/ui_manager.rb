@@ -5,7 +5,7 @@ class Interface
     include Singleton
 
     def display_separation
-        puts "----------------------------------------"
+        puts "---------------------------------------------"
     end
 
     def clear_term
@@ -27,7 +27,7 @@ class Interface
     def do_task(todo)
         case todo.to_i
         when 1
-            start_account_update
+            chose_account_update
         when 10
             save_and_exit
         else 
@@ -53,7 +53,7 @@ class Interface
         exit
     end
 
-    def start_account_update
+    def chose_account_update
         clear_term
         accounts = Accountant.instance.get_accounts_name
         puts "Which account do you want to update?"
@@ -68,17 +68,18 @@ class Interface
             display_account_log(todo.to_i + 1)
         end
     end
+
     
     def display_account_log(account_id)
         clear_term
         data =  Accountant.instance.get_account_logs(account_id)
         if data != nil
-            puts "             =>#{data["name"]}<=           " 
+            puts "             =>#{data["name"]}<= (#{Accountant.instance.calculate_total_in_account(account_id)})          " 
             display_separation
-            puts "|       Libelle      |      Value      |"
+            puts "| ID |       Libelle      |      Value      |"
             for i in 1..data.length - 2
                 display_separation
-                line = ""
+                line = "| -#{i} "
                 lib_length = data[i.to_s]["libelle"].length
                 line+= "| #{data[i.to_s]["libelle"]}"
                 for j in lib_length..18
