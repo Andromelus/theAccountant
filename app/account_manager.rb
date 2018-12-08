@@ -37,8 +37,19 @@ class Accountant
             return total
         end
     end
-    
 
+    def add_log(account_id, libelle, value)
+        puts "add log"
+        new_id = @@data["accounts"][account_id.to_s].length - 1
+        @@data["accounts"][account_id.to_s][new_id.to_s] = {"libelle" => libelle, "value" => value.to_f}
+        save_current_data
+        return @@data["accounts"][account_id.to_s][new_id.to_s]
+    end
+
+    
+    def save_current_data
+        DAO.instance.overwrite_file(@@data)
+    end
     private 
     def store_accounts_name(accounts, acc_qtt)
         i = 0
@@ -47,7 +58,5 @@ class Accountant
         end
     end
 
-    def save_current_data
-        DAO.instance.overwrite_file(@@accounts)
-    end
+
 end

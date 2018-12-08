@@ -49,7 +49,8 @@ class Interface
     def save_and_exit
         clear_term
         puts "Saving ..."
-        puts "NEED TO DO EXIT AND SABING"
+        Accountant.instance.save_current_data
+        puts "Successfuly saved new data"
         exit
     end
 
@@ -98,6 +99,44 @@ class Interface
         else
             puts "Error loading data"
         end
-        todo = gets.chomp
+        display_update_choice(account_id)
     end
+
+    def display_update_choice(account_id)
+        puts "Actions"
+        display_separation
+        puts "| [1] - Add log"
+        puts "| [2] - Delete log"
+        puts "| [3] - Update log"
+        puts "| [10] - Exit"
+        todo = gets.chomp
+
+        case todo.to_i
+        when 1
+            add_log(account_id)
+            display_account_log(account_id)
+        when 2
+            delete_log(account_id)
+        when 3
+            update_log(account_id)
+        end
+    end
+
+    def add_log(account_id)
+        clear_term
+        puts "Libelle => " 
+        libelle = gets.chomp
+        puts "Value => "
+        value = gets.chomp
+        Accountant.instance.add_log(account_id, libelle, value)
+    end
+
+    def delete_log(account_id)
+
+    end
+
+    def update_log(account_id)
+
+    end
+
 end
