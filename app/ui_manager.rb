@@ -5,7 +5,7 @@ class Interface
     include Singleton
 
     def display_separation
-        puts "--------------------------------------------------"
+        puts "----------------------------------------"
     end
 
     def clear_term
@@ -72,32 +72,28 @@ class Interface
     def display_account_log(account_id)
         clear_term
         data =  Accountant.instance.get_account_logs(account_id)
-        puts "| #{data[1.to_s]["value"]}"
-        puts data[1.to_s]["value"]
         if data != nil
-            puts "                 #{data["name"]}           " 
+            puts "             =>#{data["name"]}<=           " 
             display_separation
-            puts "|       Libelle      |       Value        |"
-            for i in 1..data.length
+            puts "|       Libelle      |      Value      |"
+            for i in 1..data.length - 2
                 display_separation
                 line = ""
                 lib_length = data[i.to_s]["libelle"].length
-                lib_missing_char = (20 - lib_length) / 2
                 line+= "| #{data[i.to_s]["libelle"]}"
-                for i in 0..lib_missing_char.to_i
+                for j in lib_length..18
                     line += " "
                 end
-
                 line += "| #{data[i.to_s]["value"]}"
 
                 value_length = data[i.to_s]["value"].to_s.length
-                value_missing_char = (20 - value_length) / 2
-                for i in 0..value_missing_char.to_i
+                for k in value_length..10
                     line += " "
                 end
                 line += "     |"
                 puts line
             end
+            display_separation
         else
             puts "Error loading data"
         end
