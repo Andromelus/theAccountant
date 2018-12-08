@@ -5,7 +5,7 @@ class Interface
     include Singleton
 
     def display_separation
-        puts "---------------------------------------------"
+        puts "--------------------------------------------------------"
     end
 
     def clear_term
@@ -77,7 +77,7 @@ class Interface
         if data != nil
             puts "             =>#{data["name"]}<= (#{Accountant.instance.calculate_total_in_account(account_id)})          " 
             display_separation
-            puts "| ID |       Libelle      |      Value      |"
+            puts "| ID |       Libelle      |      Value      |   Date   |"
             for i in 1..data["txl"].length 
                 display_separation
                 line = "| -#{i} "
@@ -92,7 +92,9 @@ class Interface
                 for k in value_length..10
                     line += " "
                 end
-                line += "     |"
+
+                line += "     |#{data["txl"][i.to_s]["date"]}"
+
                 puts line
             end
             display_separation
@@ -115,7 +117,6 @@ class Interface
             add_log(account_id)
             display_account_log(account_id)
         when 2
-            puts "here?"
             delete_log(account_id)
         when 3
             update_log(account_id)
@@ -128,7 +129,9 @@ class Interface
         libelle = gets.chomp
         puts "Value => "
         value = gets.chomp
-        Accountant.instance.add_log(account_id, libelle, value)
+        puts "Date => "
+        date = gets.chomp
+        Accountant.instance.add_log(account_id, libelle, value, date)
         display_account_log(account_id)
     end
 
@@ -141,6 +144,7 @@ class Interface
     end
 
     def update_log(account_id)
+        clear_term
 
     end
 

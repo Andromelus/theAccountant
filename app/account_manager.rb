@@ -38,9 +38,9 @@ class Accountant
         end
     end
 
-    def add_log(account_id, libelle, value)
+    def add_log(account_id, libelle, value, date)
         new_id = @@data["accounts"][account_id.to_s]["txl"].length + 1
-        @@data["accounts"][account_id.to_s]["txl"][new_id.to_s] = {"libelle" => libelle, "value" => value.to_f}
+        @@data["accounts"][account_id.to_s]["txl"][new_id.to_s] = {"libelle" => libelle, "value" => value.to_f, "date" => date}
         save_current_data
         return @@data["accounts"][account_id.to_s]["txl"][new_id.to_s]
     end
