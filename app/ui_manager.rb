@@ -35,7 +35,7 @@ class Interface
         end
         what_to_do
     end
-
+     
     def display_accounts_name
         puts "Your accounts"
         display_separation
