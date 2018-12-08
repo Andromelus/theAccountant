@@ -31,19 +31,29 @@ class Accountant
             return "Does not exist"
         else
             total = 0.0
-            for i in 1..@@data["accounts"][account_id.to_s].length - 2
-                total += @@data["accounts"][account_id.to_s][i.to_s]["value"].to_f
+            for i in 1..@@data["accounts"][account_id.to_s]["txl"].length
+                total += @@data["accounts"][account_id.to_s]["txl"][i.to_s]["value"].to_f
             end
             return total
         end
     end
 
     def add_log(account_id, libelle, value)
-        puts "add log"
-        new_id = @@data["accounts"][account_id.to_s].length - 1
-        @@data["accounts"][account_id.to_s][new_id.to_s] = {"libelle" => libelle, "value" => value.to_f}
+        new_id = @@data["accounts"][account_id.to_s]["txl"].length + 1
+        @@data["accounts"][account_id.to_s]["txl"][new_id.to_s] = {"libelle" => libelle, "value" => value.to_f}
         save_current_data
-        return @@data["accounts"][account_id.to_s][new_id.to_s]
+        return @@data["accounts"][account_id.to_s]["txl"][new_id.to_s]
+    end
+
+    def delete_log(account_id, log_id)
+        if @@data["accounts"][account_id.to_s] != nil
+            if @@data["accounts"][account_id.to_s]["txl"][log_id.to_s] != nil
+                @@data["accounts"][account_id.to_s]["txl"].delete(log_id.to_s)
+                save_current_data
+            end
+        else
+            return "not found"     
+        end
     end
 
     

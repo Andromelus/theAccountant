@@ -78,17 +78,17 @@ class Interface
             puts "             =>#{data["name"]}<= (#{Accountant.instance.calculate_total_in_account(account_id)})          " 
             display_separation
             puts "| ID |       Libelle      |      Value      |"
-            for i in 1..data.length - 2
+            for i in 1..data["txl"].length 
                 display_separation
                 line = "| -#{i} "
-                lib_length = data[i.to_s]["libelle"].length
-                line+= "| #{data[i.to_s]["libelle"]}"
+                lib_length = data["txl"][i.to_s]["libelle"].length
+                line+= "| #{data["txl"][i.to_s]["libelle"]}"
                 for j in lib_length..18
                     line += " "
                 end
-                line += "| #{data[i.to_s]["value"]}"
+                line += "| #{data["txl"][i.to_s]["value"]}"
 
-                value_length = data[i.to_s]["value"].to_s.length
+                value_length = data["txl"][i.to_s]["value"].to_s.length
                 for k in value_length..10
                     line += " "
                 end
@@ -110,12 +110,12 @@ class Interface
         puts "| [3] - Update log"
         puts "| [10] - Exit"
         todo = gets.chomp
-
         case todo.to_i
         when 1
             add_log(account_id)
             display_account_log(account_id)
         when 2
+            puts "here?"
             delete_log(account_id)
         when 3
             update_log(account_id)
@@ -129,10 +129,15 @@ class Interface
         puts "Value => "
         value = gets.chomp
         Accountant.instance.add_log(account_id, libelle, value)
+        display_account_log(account_id)
     end
 
     def delete_log(account_id)
-
+        clear_term
+        puts "Insert ID of the log to delete"
+        to_delete = gets.chomp
+        Accountant.instance.delete_log(account_id, to_delete)
+        display_account_log(account_id)
     end
 
     def update_log(account_id)
