@@ -52,11 +52,32 @@ class Accountant
                 save_current_data
             end
         else
+            puts "ERROR Accountant.delete_log"
             return "not found"     
         end
     end
 
-    
+    def update_log(account_id, new_libelle, new_value, new_date, log_id)
+        if @@data["accounts"][account_id.to_s] != nil
+            if @@data["accounts"][account_id.to_s]["txl"][log_id.to_s] != nil
+                if (new_libelle != "")
+                    @@data["accounts"][account_id.to_s]["txl"][log_id.to_s]["libelle"] = new_libelle
+                end
+                if (new_value != "")
+                    @@data["accounts"][account_id.to_s]["txl"][log_id.to_s]["value"] = new_value
+                end
+                if (new_date != "")
+                    @@data["accounts"][account_id.to_s]["txl"][log_id.to_s]["date"] = new_date
+                end
+                save_current_data
+            else
+                puts "ERROR Accountant.update"
+                return "not found"
+            end
+        end
+
+    end
+        
     def save_current_data
         DAO.instance.overwrite_file(@@data)
     end

@@ -145,7 +145,16 @@ class Interface
 
     def update_log(account_id)
         clear_term
-
+        puts "ID of the log to update"
+        id = gets.chomp
+        puts "New Libelle (empty for no change)"
+        libelle = gets.chomp
+        puts "New value (empty for no change)"
+        value = gets.chomp
+        puts "New date (empty for no change)"
+        date = gets.chomp
+        Accountant.instance.update_log(account_id, libelle, value, date, id)
+        display_account_log(account_id)
     end
 
 end
