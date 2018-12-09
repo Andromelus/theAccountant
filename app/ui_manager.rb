@@ -50,7 +50,8 @@ class Interface
         clear_term
         puts "Saving ..."
         Accountant.instance.save_current_data
-        puts "Successfuly saved new data"
+        puts "Successfuly saved new information"
+        puts "Encrypting data"
         exit
     end
 

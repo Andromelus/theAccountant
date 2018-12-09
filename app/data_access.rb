@@ -3,7 +3,7 @@ require 'singleton'
 class DAO
 
     include Singleton
-    @@file_path = "./data/data.json"
+    @@file_path = "D:/theAccountant/app/data/data.json"
 
     def merge_hashes_to_json(hash1, hash2)
         final_hash = hash1.merge(hash2)
