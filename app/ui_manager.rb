@@ -5,7 +5,7 @@ class Interface
     include Singleton
 
     def display_separation
-        puts "--------------------------------------------------------"
+        puts "--------------------------------------------------------------------"
     end
 
     def clear_term
@@ -78,7 +78,7 @@ class Interface
         if data != nil
             puts "             =>#{data["name"]}<= (#{Accountant.instance.calculate_total_in_account(account_id)})          " 
             display_separation
-            puts "| ID |       Libelle      |      Value      |   Date   |"
+            puts "| ID |       Libelle      |      Value      |    Date    |  Valid  |"
             for i in 1..data["txl"].length 
                 display_separation
                 line = "| -#{i} "
@@ -94,8 +94,13 @@ class Interface
                     line += " "
                 end
 
-                line += "     |#{data["txl"][i.to_s]["date"]}"
-
+                line += "     | #{data["txl"][i.to_s]["date"]} "
+                if data["txl"][i.to_s]["validated"] == true
+                    line += "|    V    |"
+                end
+                if data["txl"][i.to_s]["validated"] == false
+                    line += "|    X    |"
+                end
                 puts line
             end
             display_separation
@@ -111,6 +116,7 @@ class Interface
         puts "| [1] - Add log"
         puts "| [2] - Delete log"
         puts "| [3] - Update log"
+        puts "| [4] - Check/Uncheck log"
         puts "| [10] - Exit"
         todo = gets.chomp
         case todo.to_i
@@ -121,7 +127,16 @@ class Interface
             delete_log(account_id)
         when 3
             update_log(account_id)
+        when 4
+            check_uncheck_log(account_id)
         end
+    end
+
+    def check_uncheck_log (account_id)
+        clear_term
+        puts "Log ID => "
+        id = gets.chomp
+        Accountant.instance.check_uncheck_log(account_id, id)
     end
 
     def add_log(account_id)

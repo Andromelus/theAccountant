@@ -40,7 +40,7 @@ class Accountant
 
     def add_log(account_id, libelle, value, date)
         new_id = @@data["accounts"][account_id.to_s]["txl"].length + 1
-        @@data["accounts"][account_id.to_s]["txl"][new_id.to_s] = {"libelle" => libelle, "value" => value.to_f, "date" => date}
+        @@data["accounts"][account_id.to_s]["txl"][new_id.to_s] = {"libelle" => libelle, "value" => value.to_f, "date" => date, "validated" => false}
         save_current_data
         return @@data["accounts"][account_id.to_s]["txl"][new_id.to_s]
     end
@@ -76,6 +76,21 @@ class Accountant
             end
         end
 
+    end
+
+    def check_uncheck_log(account_id, log_id)
+        if @@data["accounts"][account_id.to_s] != nil
+            if @@data["accounts"][account_id.to_s]["txl"][log_id.to_s] != nil
+                @@data["accounts"][account_id.to_s]["txl"][log_id.to_s]["validated"] = !@@data["accounts"][account_id.to_s]["txl"][log_id.to_s]["validated"]
+            else
+                puts "Error Accountant.check_uncheck_log - 1"
+                return "ERROR"
+            end
+        else
+            puts "Error Accountant.check_uncheck_log - 2"
+            return "ERROR"
+        end
+        save_current_data
     end
         
     def save_current_data
